@@ -1,0 +1,62 @@
+---
+title: "Vignette DiagnostySize"
+author: "Jana Wiesner"
+package: "DiagnostySize"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette DiagnostySize}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# How to run the Shiny app 
+After installing the package with *install.packages("DiagnostySize")* one can run the app with
+```{r, Run_app}
+DiagnostySize::run_app()
+```
+
+# Documentation for the DiagnostySize app
+
+The DiagnostySize app is an application for calculating the sample size or the power in diagnostic accuracy studies.
+The optimal calculation approach was developed by Stark et al.
+
+First of all the user can select an endpoint.
+If the user wants to calculate the *sample size* for a diagnostic accuracy trial, select *“sample size”*.
+Alternatively, the user can calculate the *power* of a diagnostic accuracy study.
+To do this, click on *“power”*.
+Next, select a study design.
+In the *single-arm trial*, each participant receives the experimental test and the reference standard test.
+
+![Fig.1: Screenshot shows the endpoint and design choices](screenshot1.png)
+
+The *comparative design* compares two tests.
+One test is a previously evaluated comparator test and the second test is the experimental test.
+When you select the *comparative design*, you can choose between two types of comparison design.
+The *unpaired* approach and the *paired* approach.
+In the *unpaired* approach, the participants are divided into two groups, one receiving the experimental test and the other receiving the comparator test.
+Both groups also receive the reference standard test.\
+In the *paired* design, each participant receives all three tests, the reference standard, the comparator and the experimental test.
+In the comparative design, you can test whether the experimental test is *superior* to the comparative test, or you can set a *non-inferiority* boundary for both endpoints (sensitivity and specificity).
+
+![Fig.2: Screenshot shows the non-inferiority limits and a tooltip with additional informations](screenshot3.png)
+
+If the user chooses a non-inferiority boundary, the alpha value entered is divided by 2 because alpha is one-sided in a non-inferiority test.
+
+Once these choices have been made, the user must complete the form displayed.
+There are default values that can be easily replaced or adjusted.
+The arrows on the right of the input box allow the user to move up and down by 0.01 steps.
+
+![Fig.3: Screenshot shows the numeric input field with arrow to change the value.](screenshot2.png)
+
+Note: The values are processed using a decimal point as the decimal separator. If the browser language is set to German, the separator may be displayed as a comma instead.
+
+Valid entries are between 0 and 1 in each field, except for the sample size, which is valid between 0 and 999999. Leaving an input field empty causes errors. Pleas fill out all of the input fields.
+If a negative value is entered, an error message is displayed in the main part of the application.\
+For further information, the user can hover over the input field and an additional explanation of the value will pop up.
+An example of this additional information is shown in screenshot 2 & 3.
+In screenshot 1 you can see question mark button which, when clicked, displays further explanations about the study designs.
+
+The right hand side of the application displays the results of the calculation.
+These change as the design or input values are changed.
+Below the calculation results is a result text listing the input and output values.
+Also there is information about the paper published by Stark et al.
+These papers serve as the basis for the sample size or power calculation .

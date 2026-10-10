@@ -1,0 +1,33 @@
+Package: DiagnostySize
+Type: Package
+Title: App for Calculating the Sample Size in a Diagnostic Study
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Jana", "Wiesner",
+      email = "wiesner1@uni-bremen.de",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0009-0001-7031-7850")
+    ),
+    person(
+      "Maria", "Stark",
+      role = "ctb",
+      comment = c(ORCID = "0000-0002-1463-0885")
+    )
+  )
+Description: We developed a 'shiny' app for the optimal sample size calculations for diagnostic accuracy studies proposed in Stark and Zapf (2020) <doi:10.1177/0962280220913588>, and Stark et al. (2022) <doi:10.1186/s12874-022-01564-2>, so people without programming skills can use this approach as well. Until now, this approach was just available via 'R' scripts. This app, 'DiagnostySize', lets users apply the optimal sample size calculation approach, ensuring that no endpoint (sensitivity or specificity) is overpowered. Within the app, users can run the optimal sample size and power calculations for different study designs through a user interface.
+Imports: shiny, shinydashboard, shinyBS, markdown, DT, htmltools, stats
+License: GPL-3
+Encoding: UTF-8
+NeedsCompilation: no
+Author: Jana Wiesner [aut, cre] (ORCID:
+    <https://orcid.org/0009-0001-7031-7850>),
+  Maria Stark [ctb] (ORCID: <https://orcid.org/0000-0002-1463-0885>)
+Maintainer: Jana Wiesner <wiesner1@uni-bremen.de>
+Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr
+Suggests: knitr, rmarkdown
+URL: https://github.com/JanaW09/DiagnostySize_App
+Packaged: 2026-09-29 14:23:52 UTC; janawiesner
+Repository: CRAN
+Date/Publication: 2026-10-10 10:10:30 UTC

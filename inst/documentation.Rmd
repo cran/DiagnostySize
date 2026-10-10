@@ -1,0 +1,100 @@
+# Documentation for the DiagnostySize app
+
+The DiagnostySize app is an application for calculating the sample size or the power in diagnostic accuracy studies.
+The optimal calculation approach was developed by Stark et al.
+
+First of all the user can select an endpoint.
+If the user wants to calculate the *sample size* for a diagnostic accuracy trial, select *“sample size”*.
+Alternatively, the user can calculate the *power* of a diagnostic accuracy study.
+To do this, click on *“power”*.
+Next, select a study design.
+In the *single-arm trial*, each participant receives the experimental test and the reference standard test.
+
+![Fig.1: Screenshot shows the endpoint and design choices](img/screenshot1.png)
+
+The *comparative design* compares two tests.
+One test is a previously evaluated comparator test and the second test is the experimental test.
+When you select the *comparative design*, you can choose between two types of comparison design.
+The *unpaired* approach and the *paired* approach.
+In the *unpaired* approach, the participants are divided into two groups, one receiving the experimental test and the other receiving the comparator test.
+Both groups also receive the reference standard test.\
+In the *paired* design, each participant receives all three tests, the reference standard, the comparator and the experimental test.
+In the comparative design, you can test whether the experimental test is *superior* to the comparative test, or you can set a *non-inferiority* boundary for both endpoints (sensitivity and specificity).
+
+![Fig.2: Screenshot shows the non-inferiority limits and a tooltip with additional informations](img/screenshot3.png)
+
+If the user chooses a non-inferiority boundary, the alpha value entered is divided by 2 because alpha is one-sided in a non-inferiority test.
+
+Once these choices have been made, the user must complete the form displayed.
+There are default values that can be easily replaced or adjusted.
+The arrows on the right of the input box allow the user to move up and down by 0.01 steps.
+
+![Fig.3: Screenshot shows the numeric input field with arrow to change the value.](img/screenshot2.png)
+
+Note: The values are processed using a decimal point as the decimal separator. If the browser language is set to German, the separator may be displayed as a comma instead.
+
+Valid entries are between 0 and 1 in each field, except for the sample size, which is valid between 0 and 999999. Leaving an input field empty causes errors. Pleas fill out all of the input fields.
+If a negative value is entered, an error message is displayed in the main part of the application.\
+For further information, the user can hover over the input field and an additional explanation of the value will pop up.
+An example of this additional information is shown in screenshot 2 & 3.
+In screenshot 1 you can see question mark button which, when clicked, displays further explanations about the study designs.
+
+The right hand side of the application displays the results of the calculation.
+These change as the design or input values are changed.
+Below the calculation results is a result text listing the input and output values.
+Also there is information about the paper published by Stark et al.
+These papers serve as the basis for the sample size or power calculation .
+
+# Notation
+
+-   $N_{se}$ : Total sample size to reject the null hypothesis regarding sensitivity
+
+-   $N_{sp}$ : Total sample size to reject the null hypothesis regarding specificity
+
+-   $n_{se}$ : The minimum number of subjects with the targeted condition to reject the null hypothesis regarding sensitivity
+
+-   $n_{sp}$ : The minimum number of healthy participants to reject the null hypothesis regarding specificity
+
+-   $\pi$ : Prevalence
+
+-   $\alpha$ : Significance level (two-sided alpha)
+
+-   $Se_0$ : The minimum sensitivity threshold (single-arm trial)
+
+-   $Sp_0$ : The minimum specificity threshold (single-arm trial)
+
+-   $Se_E, Sp_E$ : The values of sensitivity and specificity of the experimental test
+
+-   $Se_C, Sp_C$ : The values of sensitivity and specificity of the comparative test
+
+-   $V(Se), V(Sp)$ : The variance of the parameters sensitivity and specificity
+
+-   $z_{\alpha/2}$ and $z_{\beta}$ : The quantile of the standard normal distribution
+
+-   $Power_t$ : The overall power
+
+-   $Power_{se}$ and $Power_{sp}$ : The power to show the sensitivity and power the specificity
+-  $H_{0_{global}}$ is the global null hypothesis and can only be rejected if both hypothesis $H_{0_{Se}}$ and $H_{0_{Sp}}$ are rejected. This applies to all of the following hypothesis.
+
+# Equations
+
+| Endpoint| Design | Hypothesis | Equations |
+|----------|-------------|:----------------|:-----------------------------------|
+| sample size | single arm |$$H_{0_{Se}}: Se_E \leq Se_0 \\ H_{0_{Sp}}: Sp_E \leq Sp_0 $$  | \\[ N_{Se}= \frac{[z_{\alpha/2}\sqrt{V(Se_0)}+ z_{\beta{se}}\sqrt{V(Se_E)}]^2}{(Se_0-Se_E)^2\cdot\pi} \\\\N_{Sp}=\frac{[z_{\alpha/2}\sqrt{V(Sp_0)}+z_{\beta_{sp}}\sqrt{V(Sp_0)}]^2}{(Sp_0-Sp_E)^2\cdot(1-\pi)}\\] |
+| sample size | comparative unpaired superiority |\\[H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C\\] | \\[ N_{Se}=\frac{(z_{\alpha/2}\sqrt{V_0(Se_C-Se_E)}+z_{\beta_{se}}\sqrt{V_A(Se_C-Se_E)})^2}{(Se_C-Se_E)^2\cdot\pi} \\\\N_{Sp}=\frac{(z_{\alpha/2}\sqrt{V_0(Sp_C-Sp_E)}+z_{\frac{1-\beta_{se}-Power_t}{1-\beta_{se}} }\sqrt{V_A(Sp_C-Sp_E)})^2}{(Sp_C-Sp_E)^2\cdot(1-\pi)} \\] |
+| sample size |comparative paired superiority |\\[H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C\\] | \\[N_{Se}= \frac{(z_{1-\alpha/2}\cdot\psi_D+z_{1-\beta_{se}}\sqrt{\psi_D^2-\frac{1}{4}(Se_C-Se_E)^2(3+\psi_D)})^2}{\psi_D(Se_C-Se_E)^2\pi} \\\\N_{Sp}= \frac{(z_{1-\alpha/2}\cdot\psi_{ND}+z_{\frac{Power_t}{1-\beta_{se}}}\sqrt{\psi_{ND}^2-\frac{1}{4}(Sp_C-Sp_E)^2(3+\psi_{ND})})^2}{\psi_{ND}(Sp_C-Sp_E)^2(1-\pi)} \\] |
+| sample size |comparative unpaired non-inferiority |\\[H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C -\Delta\_{Sp}\\] | \\[N_{Se}= \frac{(z_{\alpha/2}+z_{\beta_{Se}})^2\cdot V_A(Se_C-Se_E)}{(Se_C-Se_E-\Delta_{Se})^2\cdot\pi}\\\\N_{Sp}= \frac{(z_{\alpha/2}+z_{\beta_{\frac{1-\beta_{Se}-Power_t}{1-\beta_{Se}}}})^2\cdot V_A(Sp_C-Sp_E)}{(Sp_C-Sp_E-\Delta_{Sp})^2\cdot(1-\pi)} \\] |
+| sample size | comparative paired non-inferiority |\\[H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C -\Delta\_{Sp}\\] | \\[ N_{Se}=\frac{(\psi_D-(Se_E -Se_C)^2)(\frac{z_{\alpha/2}}{w_{u_{Se}}}+z_{\beta_{Se}})^2}{(-\Delta_{Se}-(Se_E-Se_C))^2\cdot \pi} \\\\ N_{Sp}=\frac{(\psi_{ND}-(Sp_E -Sp_C)^2)(\frac{z_{\alpha/2}}{w_{u_{Sp}}}+z_{\frac{1-\beta_{Se}-Power_t}{1-\beta_{Se}}})^2}{(-\Delta_{Sp}-(Sp_E-Sp_C))^2\cdot (1-\pi)} \\] |
+| sample size | comparative unpaired se sup sp non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C - \Delta_{Sp} \\] | \\[  N_{Se}=\frac{z_{\frac{\alpha}{2}}\sqrt{V_0(Se_C-Se_E)}+z_{\beta_{se}}\sqrt{V_A(Se_C-Se_E)}^2}{(Se_C-Se_E)^2\cdot\pi}\\\\ N_{Sp}=\frac{(z_{\frac{\alpha}{2}}+z_{\beta_{\frac{1-\beta_{Se}-Power_t}{1-\beta_{Se}}}})^2\cdot V_A(Sp_C-Sp_E)}{(Sp_C-Sp_E-\Delta_{Sp})^2\cdot(1-\pi)} \\] |
+| sample size | comparative unpaired sp sup se non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C  \\]  | \\[ N_{Se}=\frac{(z_{\frac{\alpha}{2}}+z_{\beta_{Se}})^2\cdot V_A(Se_C-Se_E)}{(Se_C-Se_E-\Delta_{Se})^2\cdot \pi} \\\\ N_{Sp}=\frac{(z_{\frac{\alpha}{2}}\sqrt{V_0(Sp_C-Sp_E)}+z_{\frac{1-\beta_{se}-Power_t}{1-\beta_{se}}}\sqrt{V_A(Sp_C-Sp_E)})^2}{(Sp_C-Sp_E)^2\cdot(1-\pi)}  \\] |
+| sample size |comparative paired se sup sp non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C - \Delta_{Sp} \\] | \\[ N_{Se}=\frac{(z_{1-\frac{\alpha}{2}}\cdot\psi_D + z_{1-\beta_{se}}\sqrt{\psi_D^2-\frac{1}{4}(Se_C-Se_E)^2(3+\psi_D)})^2}{\psi_D(Se_C-Se_E)^2\cdot\pi}\\\\ N_{Sp}=\frac{(\psi_{ND}-(Sp_E -Sp_C)^2)(\frac{z_{\frac{\alpha}{2}}}{w_{u_{Sp}}}+z_{\frac{1-\beta_{Se}-Power_t}{1-\beta_{Se}}})^2}{(-\Delta_{Sp}-(Sp_E-Sp_C))^2\cdot (1-\pi)} \\] |
+| sample size | comparative paired sp sup se non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C  \\] | \\[  N_{Se}= \frac{(\psi_D-(Se_E -Se_C)^2)(\frac{z_{\frac{\alpha}{2}}}{w_{u_{Se}}}+z_{\beta_{Se}})^2}{(-\Delta_{Se}-(Se_E-Se_C))^2\cdot \pi}\\\\ N_{Sp}=\frac{(z_{1-\frac{\alpha}{2}}\cdot\psi_{ND}+z_{\frac{Power_t}{1-\beta_{se}}}{\sqrt{\psi_{ND}^2-\frac{1}{4}(Sp_C-Sp_E)^2(3+\psi_{ND})}})^2}{\psi_{ND}(Sp_C-Sp_E)^2(1-\pi)}   \\] |
+| Power | single arm  |\\[ H_{0_{Se}}: Se_0 \leq Se_E\\\\ H_{0_{Sp}}: Sp_0\leq Sp_E \\]  | \\[  Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{\beta_{se}}= \frac{n_{se}\cdot(Se_0-Se_E)^2-z_{\frac{\alpha}{2}}\sqrt{V(Se_0)}}{\sqrt{V(Se_E)}^2}\\\\ Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\ z_{\beta_{sp}}= \frac{n_{sp}\cdot(Sp_0-Sp_E)^2-z_{\frac{\alpha}{2}}\sqrt{V(Sp_0)}}{\sqrt{V(Sp_E)}^2}\\] |
+| Power | comparative unpaired superiority | \\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C \\] | \\[ Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{\beta_{se}} = \frac{n_{se}\cdot(Se_C-Se_E)^2-z_{\frac{\alpha}{2}}\sqrt{V_0(Se_C-Se_E)}}{\sqrt{V_A(Se_C-Se_E)}^2}\\\\Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\ z_{\beta_{sp}} = \frac{n_{sp}\cdot(Sp_C-Sp_E)^2-z_{\frac{\alpha}{2}}\sqrt{V_0(Sp_C-Sp_E)}}{\sqrt{V_A(Sp_C-Sp_E)}^2}\\] |
+| Power | comparative paired superiority |\\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C  \\]  |\\[   Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{1-\beta_{se}} = \frac{\sqrt{n_{se}}\cdot\sqrt{\psi_D}(Se_C-Se_E)-z_{1-\frac{\alpha}{2}}\cdot\psi_D}{\sqrt{\psi_D^2-\frac{1}{4}(Se_c-Se_E)^2(3+\psi_D)}}\\\\Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\z_{1-\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot\sqrt{\psi_{ND}}(Sp_C-Sp_E)-z_{1-\frac{\alpha}{2}}\cdot\psi_{ND}}{\sqrt{\psi_{ND}^2-\frac{1}{4}(Sp_c-Sp_E)^2(3+\psi_{ND})}}\\]  |
+| Power | comparative unpaired non-inferiority |\\[H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C -\Delta\_{Sp}\\]  |\\[Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\z_{\beta_{se}} = \frac{\sqrt{n_{se}}\cdot(Se_C-Se_E-\Delta)-z_{\frac{\alpha}{2}}}{\sqrt{V_A(Se_C-Se_E}}\\\\ Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\ z_{\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot(Sp_C-Sp_E-\Delta)-z_{\frac{\alpha}{2}}}{\sqrt{V_A(Sp_C-Sp_E}} \\] |
+| Power | comparative paired non-inferiority | \\[H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C -\Delta\_{Sp}\\] |\\[ Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{\beta_{se}} = \frac{\sqrt{n_{se}}\cdot(-\Delta_{Se}-(Se_E-Se_C))-\frac{z_{\frac{\alpha}{2}}}{Wu_{Se}}}{(\sqrt{\psi_D}-(Se_E-Se_C))}\\\\Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\ z_{\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot(-\Delta_{Sp}-(Sp_E-Sp_C))-\frac{z_{\frac{\alpha}{2}}}{Wu_{Sp}}}{(\sqrt{\psi_{ND}}-(Sp_E-Sp_C))}\\] |
+| Power | comparative unpaired se sup sp non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C - \Delta_{Sp} \\] | \\[  Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{\beta_{se}} = \frac{n_{se}\cdot(Se_C-Se_E)^2-z_{\frac{\alpha}{2}}\sqrt{V_0(Se_C-Se_E)}}{\sqrt{V_A(Se_C-Se_E)}^2}\\\\ Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\ z_{\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot(Sp_C-Sp_E-\Delta)-z_{\frac{\alpha}{2}}}{\sqrt{V_A(Sp_C-Sp_E}}\\]|
+| Power | comparative unpaired sp sup se non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C  \\]  |\\[ Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{\beta_{se}} = \frac{\sqrt{n_{se}}\cdot(Se_C-Se_E-\Delta)-z_{\frac{\alpha}{2}}}{\sqrt{V_A(Se_C-Se_E}}\\\\ Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\z_{\beta_{sp}} = \frac{n_{sp}\cdot(Sp_C-Sp_E)^2-z_{\frac{\alpha}{2}}\sqrt{V_0(Sp_C-Sp_E)}}{\sqrt{V_A(Sp_C-Sp_E)}^2}\\] |
+| Power | comparative paired se sup sp non-inf | \\[ H_{0_{Se}}: Se_E \leq Se_C \\\\H_{0_{Sp}}: Sp_E \leq Sp_C - \Delta_{Sp} \\] |\\[ Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\ z_{1-\beta_{se}} = \frac{\sqrt{n_{se}}\cdot\sqrt{\psi_D}(Se_C-Se_E)-z_{1-\frac{\alpha}{2}}\cdot\psi_D}{\sqrt{\psi_D^2-\frac{1}{4}(Se_c-Se_E)^2(3+\psi_D)}}\\\\ Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\z_{\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot(-\Delta_{Sp}-(Sp_E-Sp_C))-\frac{z_{\frac{\alpha}{2}}}{Wu_{Sp}}}{(\sqrt{\psi_{ND}}-(Sp_E-Sp_C))}\\] |
+| Power | comparative paired sp sup se non-inf |\\[ H_{0_{Se}}: Se_E \leq Se_C - \Delta_{Se} \\\\H_{0_{Sp}}: Sp_E \leq Sp_C  \\] |\\[ Power_{Se}= 1-\Phi(z_{\beta_{se}})\\\\z_{\beta_{se}} = \frac{\sqrt{n_{se}}\cdot(-\Delta_{Se}-(Se_E-Se_C))-\frac{z_{\frac{\alpha}{2}}}{Wu_{Se}}}{(\sqrt{\psi_D}-(Se_E-Se_C))}\\\\Power_{Sp}= 1-\Phi(z_{\beta_{sp}})\\\\z_{1-\beta_{sp}} = \frac{\sqrt{n_{sp}}\cdot\sqrt{\psi_{ND}}(Sp_C-Sp_E)-z_{1-\frac{\alpha}{2}}\cdot\psi_{ND}}{\sqrt{\psi_{ND}^2-\frac{1}{4}(Sp_c-Sp_E)^2(3+\psi_{ND})}}\\] |
